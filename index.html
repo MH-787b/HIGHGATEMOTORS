@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highgate Motors | Trusted Car Care in Highgate, London</title>
+    <meta name="description" content="Highgate Motors — honest, reliable car servicing, MOTs and repairs in Highgate, London N6. Trusted by locals for over 20 years.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========== RESET ========== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #f5f5f5;
+            background: #111111;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+        button { font-family: inherit; cursor: pointer; border: none; }
+
+        /* ========== LOADER ========== */
+        .loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #111111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        .loader.done {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-wheel {
+            width: 72px;
+            height: 72px;
+            animation: wheelSpin 1s linear infinite;
+        }
+        .loader-wheel svg { width: 100%; height: 100%; }
+        .loader-text {
+            margin-top: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #c8a046;
+        }
+        @keyframes wheelSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========== UTILITIES ========== */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+        .section { padding: 100px 0; }
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #c8a046;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: 38px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .section-subtitle {
+            font-size: 17px;
+            color: #999999;
+            max-width: 640px;
+            line-height: 1.7;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: background 0.25s, transform 0.2s;
+        }
+        .btn:active { transform: scale(0.97); }
+        .btn-primary {
+            background: #c8a046;
+            color: #111111;
+        }
+        .btn-primary:hover { background: #b8903a; }
+        .btn-outline {
+            background: transparent;
+            color: #f5f5f5;
+            border: 1.5px solid #333333;
+        }
+        .btn-outline:hover { border-color: #c8a046; color: #c8a046; }
+
+        /* ========== ANIMATIONS ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* Slide from left */
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-48px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal-left.visible { opacity: 1; transform: none; }
+
+        /* Slide from right */
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(48px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal-right.visible { opacity: 1; transform: none; }
+
+        /* Scale up from slightly smaller */
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal-scale.visible { opacity: 1; transform: none; }
+
+        /* Clip reveal — wipes in from bottom */
+        .reveal-clip {
+            clip-path: inset(100% 0 0 0);
+            transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .reveal-clip.visible { clip-path: inset(0 0 0 0); }
+        .reveal-clip.reveal-delay-1 { transition-delay: 0.08s; }
+        .reveal-clip.reveal-delay-2 { transition-delay: 0.16s; }
+        .reveal-clip.reveal-delay-3 { transition-delay: 0.24s; }
+        .reveal-clip.reveal-delay-4 { transition-delay: 0.32s; }
+
+        /* ========== HEADER ========== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(17, 17, 17, 0);
+            backdrop-filter: blur(0px);
+            transition: background 0.35s, backdrop-filter 0.35s, box-shadow 0.35s;
+        }
+        .header.scrolled {
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
+        .logo span { color: #c8a046; }
+        .nav { display: flex; align-items: center; gap: 36px; }
+        .nav a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #999999;
+            transition: color 0.25s;
+        }
+        .nav a:hover { color: #ffffff; }
+        .header-cta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-phone {
+            font-size: 14px;
+            font-weight: 500;
+            color: #999999;
+            transition: color 0.25s;
+        }
+        .header-phone:hover { color: #c8a046; }
+
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            background: none;
+            padding: 8px;
+            position: relative;
+            width: 32px;
+            height: 32px;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: #f5f5f5;
+            position: absolute;
+            left: 6px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .menu-toggle span:nth-child(1) { top: 8px; }
+        .menu-toggle span:nth-child(2) { top: 15px; }
+        .menu-toggle span:nth-child(3) { top: 22px; }
+        .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: #111111;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://static.where-e.com/United_Kingdom/England/Highgate-Motors_fa12899300aa8077780b35f5b3d374f9.jpg') center/cover no-repeat;
+            opacity: 0.2;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, #111111, transparent);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+        .hero-label {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #c8a046;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: heroFadeUp 0.8s 0.3s forwards;
+        }
+        .hero-title {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #ffffff;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: heroFadeUp 0.8s 0.5s forwards;
+        }
+        .hero-desc {
+            font-size: 18px;
+            color: #999999;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: heroFadeUp 0.8s 0.7s forwards;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: heroFadeUp 0.8s 0.9s forwards;
+        }
+        @keyframes heroFadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-stats {
+            display: flex;
+            gap: 64px;
+            margin-top: 72px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: heroFadeUp 0.8s 1.1s forwards;
+        }
+        .hero-stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #c8a046;
+        }
+        .hero-stat-text {
+            font-size: 14px;
+            color: #666666;
+            margin-top: 4px;
+        }
+
+        /* ========== SERVICES ========== */
+        .services { background: #111111; }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .service-card {
+            background: #1a1a1a;
+            border: 1px solid #222222;
+            padding: 36px 28px;
+            border-radius: 6px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .service-card:hover {
+            border-color: #c8a046;
+            transform: translateY(-4px);
+        }
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: #c8a046;
+        }
+        .service-icon svg { width: 32px; height: 32px; }
+        .service-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+        .service-card p {
+            font-size: 14px;
+            color: #777777;
+            line-height: 1.6;
+        }
+
+        /* ========== WHY US ========== */
+        .why-us { background: #0d0d0d; }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 56px;
+        }
+        .why-item {
+            text-align: center;
+            padding: 48px 32px;
+            border: 1px solid #1a1a1a;
+            border-radius: 6px;
+            transition: border-color 0.3s;
+        }
+        .why-item:hover { border-color: #333333; }
+        .why-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #c8a046;
+            margin-bottom: 16px;
+        }
+        .why-item h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+        .why-item p {
+            font-size: 15px;
+            color: #777777;
+            line-height: 1.6;
+        }
+
+        /* ========== REVIEWS ========== */
+        .reviews { background: #111111; }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .review-card {
+            background: #1a1a1a;
+            border: 1px solid #222222;
+            padding: 32px;
+            border-radius: 6px;
+        }
+        .review-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 16px;
+        }
+        .review-stars svg { width: 16px; height: 16px; fill: #c8a046; }
+        .review-text {
+            font-size: 15px;
+            color: #cccccc;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .review-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .review-source {
+            font-size: 12px;
+            color: #666666;
+            margin-top: 2px;
+        }
+
+        /* ========== ABOUT ========== */
+        .about { background: #0d0d0d; }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .about-image {
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .about-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(200, 160, 70, 0.2);
+            border-radius: 6px;
+        }
+        .about-text p {
+            font-size: 16px;
+            color: #999999;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .about-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
+        .about-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .about-detail-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            color: #c8a046;
+            margin-top: 2px;
+        }
+        .about-detail-text {
+            font-size: 14px;
+            color: #999999;
+        }
+        .about-detail-text strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* ========== GALLERY ========== */
+        .gallery { background: #111111; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-top: 48px;
+            margin-left: -48px;
+            margin-right: -48px;
+        }
+        .gallery-item {
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 4px;
+            position: relative;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+            cursor: pointer;
+        }
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        /* ========== LIGHTBOX ========== */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .lightbox.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 4px;
+            transform: scale(0.94);
+            transition: transform 0.35s ease;
+        }
+        .lightbox.open .lightbox-img {
+            transform: scale(1);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            background: none;
+            color: #ffffff;
+            font-size: 32px;
+            line-height: 1;
+            padding: 8px;
+            opacity: 0.6;
+            transition: opacity 0.25s;
+        }
+        .lightbox-close:hover { opacity: 1; }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            color: #ffffff;
+            font-size: 40px;
+            padding: 16px;
+            opacity: 0.5;
+            transition: opacity 0.25s;
+            user-select: none;
+        }
+        .lightbox-nav:hover { opacity: 1; }
+        .lightbox-prev { left: 16px; }
+        .lightbox-next { right: 16px; }
+        .lightbox-counter {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: #666666;
+            font-weight: 500;
+        }
+
+        /* ========== CONTACT ========== */
+        .contact { background: #0d0d0d; }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            margin-top: 48px;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #999999;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 14px 16px;
+            background: #1a1a1a;
+            border: 1px solid #222222;
+            border-radius: 4px;
+            color: #f5f5f5;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.25s;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #c8a046;
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-group select option { background: #1a1a1a; }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .contact-info { display: flex; flex-direction: column; gap: 32px; }
+        .contact-block h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .contact-block p,
+        .contact-block a {
+            font-size: 15px;
+            color: #999999;
+            line-height: 1.7;
+        }
+        .contact-block a:hover { color: #c8a046; }
+        .contact-hours {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 4px 24px;
+            font-size: 15px;
+        }
+        .contact-hours dt { color: #999999; }
+        .contact-hours dd { color: #ffffff; }
+        .map-wrapper {
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 16px;
+            border: 1px solid #222222;
+        }
+        .map-wrapper iframe {
+            display: block;
+            width: 100%;
+            height: 240px;
+            border: 0;
+            filter: invert(0.9) hue-rotate(180deg) brightness(0.7) contrast(1.1);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: #0a0a0a;
+            padding: 40px 0;
+            border-top: 1px solid #1a1a1a;
+        }
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-copy {
+            font-size: 13px;
+            color: #555555;
+        }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a {
+            font-size: 13px;
+            color: #555555;
+            transition: color 0.25s;
+        }
+        .footer-links a:hover { color: #c8a046; }
+
+        /* ========== WHATSAPP FLOAT ========== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: transform 0.25s;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+        }
+        .whatsapp-float:hover { transform: scale(1.08); }
+        .whatsapp-float svg { width: 28px; height: 28px; fill: #ffffff; }
+
+        /* ========== MOBILE CALL BAR ========== */
+        .mobile-call-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 998;
+            background: #c8a046;
+            padding: 14px 24px;
+            text-align: center;
+        }
+        .mobile-call-bar a {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .mobile-call-bar svg { width: 20px; height: 20px; fill: #111111; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-title { font-size: 44px; }
+            .section-title { font-size: 32px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav, .header-cta .header-phone { display: none; }
+            .menu-toggle { display: block; }
+            .header-cta .btn { display: none; }
+
+            /* Mobile nav overlay */
+            .mobile-nav {
+                display: none;
+                position: fixed;
+                inset: 0;
+                top: 72px;
+                background: rgba(17, 17, 17, 0.98);
+                z-index: 999;
+                padding: 40px 24px;
+                flex-direction: column;
+                gap: 0;
+            }
+            .mobile-nav.open { display: flex; }
+            .mobile-nav a {
+                display: block;
+                font-size: 20px;
+                font-weight: 500;
+                color: #cccccc;
+                padding: 16px 0;
+                border-bottom: 1px solid #1a1a1a;
+                transition: color 0.25s;
+            }
+            .mobile-nav a:hover { color: #c8a046; }
+            .mobile-nav .mobile-nav-phone {
+                margin-top: 32px;
+                font-size: 18px;
+                color: #c8a046;
+                font-weight: 600;
+                border: none;
+            }
+
+            .hero { min-height: 100svh; }
+            .hero-title { font-size: 36px; }
+            .hero-desc { font-size: 16px; }
+            .hero-stats { gap: 32px; }
+            .hero-stat-number { font-size: 28px; }
+
+            .section { padding: 72px 0; }
+            .section-title { font-size: 28px; }
+
+            .services-grid { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .about-grid { grid-template-columns: 1fr; gap: 32px; }
+            .container { padding: 0 20px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); margin-left: -20px; margin-right: -20px; }
+            .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+            .form-row { grid-template-columns: 1fr; }
+
+            .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+            .mobile-call-bar { display: block; }
+            .whatsapp-float { bottom: 80px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats { flex-direction: column; gap: 20px; }
+            .about-details { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADER -->
+    <div class="loader" id="loader">
+        <div class="loader-wheel">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer tyre -->
+                <circle cx="50" cy="50" r="46" stroke="#333333" stroke-width="6" fill="none"/>
+                <!-- Rim circle -->
+                <circle cx="50" cy="50" r="30" stroke="#c8a046" stroke-width="2" fill="none"/>
+                <!-- Hub -->
+                <circle cx="50" cy="50" r="6" fill="#c8a046"/>
+                <!-- Spokes -->
+                <line x1="50" y1="20" x2="50" y2="44" stroke="#c8a046" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="78.5" y1="35" x2="55.2" y2="47" stroke="#c8a046" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="78.5" y1="65" x2="55.2" y2="53" stroke="#c8a046" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="50" y1="80" x2="50" y2="56" stroke="#c8a046" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="21.5" y1="65" x2="44.8" y2="53" stroke="#c8a046" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="21.5" y1="35" x2="44.8" y2="47" stroke="#c8a046" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Tyre tread marks -->
+                <circle cx="50" cy="50" r="46" stroke="#555555" stroke-width="6" fill="none"
+                    stroke-dasharray="4 8" />
+            </svg>
+        </div>
+        <p class="loader-text">Highgate Motors</p>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="#" class="logo">HIGHGATE<span>.</span></a>
+                <nav class="nav" id="nav">
+                    <a href="#services">Services</a>
+                    <a href="#why-us">Why Us</a>
+                    <a href="#reviews">Reviews</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+                <div class="header-cta">
+                    <a href="tel:02083401175" class="header-phone">020 8340 1175</a>
+                    <a href="#contact" class="btn btn-primary">Book Now</a>
+                </div>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#services" onclick="closeMobileNav()">Services</a>
+        <a href="#why-us" onclick="closeMobileNav()">Why Us</a>
+        <a href="#reviews" onclick="closeMobileNav()">Reviews</a>
+        <a href="#about" onclick="closeMobileNav()">About</a>
+        <a href="#contact" onclick="closeMobileNav()">Contact</a>
+        <a href="tel:02083401175" class="mobile-nav-phone">020 8340 1175</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <p class="hero-label">Highgate, London N6</p>
+                <h1 class="hero-title">Honest car care you can&nbsp;rely&nbsp;on.</h1>
+                <p class="hero-desc">MOTs, servicing and repairs from a team Highgate has trusted for over two decades. Fair pricing, no surprises.</p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary">Book a Service</a>
+                    <a href="tel:02083401175" class="btn btn-outline">Call Us</a>
+                </div>
+                <div class="hero-stats">
+                    <div>
+                        <div class="hero-stat-number">20+</div>
+                        <div class="hero-stat-text">Years of Service</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-number">10/10</div>
+                        <div class="hero-stat-text">Customer Rating</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-number">1000s</div>
+                        <div class="hero-stat-text">Vehicles Serviced</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services section" id="services">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-label">What We Do</p>
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">From routine MOTs to complex repairs, we look after every aspect of your vehicle with care and precision.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal reveal-delay-1">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 12l2 2 4-4"/>
+                            <path d="M12 3c1.2 0 2.4.6 3 1.5A3.5 3.5 0 0 1 19 8v1a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-1.2A3 3 0 0 1 15 19H9a3 3 0 0 1-2.8-2H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2V8a3.5 3.5 0 0 1 4-3.5A3.5 3.5 0 0 1 12 3z"/>
+                        </svg>
+                    </div>
+                    <h3>MOT Testing</h3>
+                    <p>Official MOT testing station. Quick, thorough inspections with honest assessments and no unnecessary upselling.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-2">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                    </div>
+                    <h3>Car Servicing</h3>
+                    <p>Full and interim servicing for all makes and models. We follow manufacturer guidelines to keep your warranty intact.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-3">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                        </svg>
+                    </div>
+                    <h3>Repairs &amp; Diagnostics</h3>
+                    <p>Engine, brakes, suspension, electrical. We diagnose the problem accurately and fix it right the first time.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-4">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                            <path d="M16 7V5a4 4 0 0 0-8 0v2"/>
+                            <circle cx="12" cy="14" r="2"/>
+                        </svg>
+                    </div>
+                    <h3>BMW Specialist</h3>
+                    <p>Specialist knowledge of BMW vehicles. Dealer-level diagnostics and servicing at independent garage prices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY US -->
+    <section class="why-us section" id="why-us">
+        <div class="container">
+            <div class="reveal" style="text-align:center;">
+                <p class="section-label">Why Highgate Motors</p>
+                <h2 class="section-title" style="margin-left:auto;margin-right:auto;">Trusted by your neighbours.</h2>
+                <p class="section-subtitle" style="margin-left:auto;margin-right:auto;">We don't just fix cars. We build relationships. Many of our customers have been with us for over a decade.</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-item reveal-left reveal-delay-1">
+                    <div class="why-number">20+</div>
+                    <h3>Years Established</h3>
+                    <p>Serving the Highgate community for over two decades. We're not going anywhere.</p>
+                </div>
+                <div class="why-item reveal reveal-delay-2">
+                    <div class="why-number">Fair</div>
+                    <h3>Transparent Pricing</h3>
+                    <p>No hidden costs. We explain what needs doing, why, and how much it will cost — before we start.</p>
+                </div>
+                <div class="why-item reveal-right reveal-delay-3">
+                    <div class="why-number">100%</div>
+                    <h3>Parts &amp; Labour Warranty</h3>
+                    <p>Every repair comes with a warranty on both parts and labour. We stand behind our work.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="reviews section" id="reviews">
+        <div class="container">
+            <div class="reveal" style="text-align:right;">
+                <p class="section-label">Customer Reviews</p>
+                <h2 class="section-title">What people say.</h2>
+                <p class="section-subtitle" style="margin-left:auto;">Real feedback from real customers. Our reputation is built on trust.</p>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card reveal-scale reveal-delay-1">
+                    <div class="review-stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <p class="review-text">"Best north London garage I've ever had the pleasure of dealing with. Honest, reliable and always go the extra mile."</p>
+                    <p class="review-author">Long-term Customer</p>
+                    <p class="review-source">AutoInsider — 10/10</p>
+                </div>
+                <div class="review-card reveal-scale reveal-delay-2">
+                    <div class="review-stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <p class="review-text">"Great garage, would recommend. Been using them for over 10 years. Fair prices, no hidden costs, and they always explain what they're doing."</p>
+                    <p class="review-author">Loyal Customer</p>
+                    <p class="review-source">AutoInsider — 10/10</p>
+                </div>
+                <div class="review-card reveal-scale reveal-delay-3">
+                    <div class="review-stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <p class="review-text">"Responsive staff, reliable workmanship. Clear communication throughout the whole repair. Quality work and they never try to sell you something you don't need."</p>
+                    <p class="review-author">Satisfied Customer</p>
+                    <p class="review-source">Wheree — 5 Stars</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image reveal-left">
+                    <img src="https://static.where-e.com/United_Kingdom/England/Highgate-Motors_9cca4b6258ddafb553a72002a2479848.jpg" alt="Highgate Motors garage" loading="lazy">
+                </div>
+                <div class="about-text reveal-right reveal-delay-2">
+                    <p class="section-label">About Us</p>
+                    <h2 class="section-title">Your local garage in&nbsp;Highgate.</h2>
+                    <p>Highgate Motors is a trusted, independent car service provider located in the heart of Highgate, London. We've built our reputation on honesty, fair pricing and doing the job right — not on flashy advertising.</p>
+                    <p>Many of our customers have been with us for over 10&nbsp;to&nbsp;20 years. They come back because we treat them fairly, communicate clearly, and stand behind every job we do.</p>
+                    <div class="about-details">
+                        <div class="about-detail">
+                            <div class="about-detail-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
+                            <div class="about-detail-text">
+                                <strong>Location</strong>
+                                9 Broadbent Close<br>London N6 5JW
+                            </div>
+                        </div>
+                        <div class="about-detail">
+                            <div class="about-detail-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            </div>
+                            <div class="about-detail-text">
+                                <strong>Hours</strong>
+                                Mon — Fri: 8:00 – 18:00<br>Sat: By arrangement
+                            </div>
+                        </div>
+                        <div class="about-detail">
+                            <div class="about-detail-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            </div>
+                            <div class="about-detail-text">
+                                <strong>Phone</strong>
+                                <a href="tel:02083401175">020 8340 1175</a>
+                            </div>
+                        </div>
+                        <div class="about-detail">
+                            <div class="about-detail-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M20 12a8 8 0 1 0-16 0 8 8 0 0 0 16 0z"/></svg>
+                            </div>
+                            <div class="about-detail-text">
+                                <strong>Warranty</strong>
+                                All parts &amp; labour
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery section" id="gallery">
+        <div class="container">
+            <div class="reveal" style="text-align:center;">
+                <p class="section-label">Our Garage</p>
+                <h2 class="section-title" style="margin-left:auto;margin-right:auto;">See where the work gets&nbsp;done.</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item reveal-clip reveal-delay-1">
+                    <img src="https://static.where-e.com/United_Kingdom/England/Highgate-Motors_df5531eac3f6d6ac6d65f5b1d51f8f0d.jpg" alt="Highgate Motors workshop" loading="lazy">
+                </div>
+                <div class="gallery-item reveal-clip reveal-delay-2">
+                    <img src="https://static.where-e.com/United_Kingdom/England/Highgate-Motors_fa2313f82ae12b229216f0c948c706d8.jpg" alt="Highgate Motors service bay" loading="lazy">
+                </div>
+                <div class="gallery-item reveal-clip reveal-delay-3">
+                    <img src="https://static.where-e.com/United_Kingdom/England/Highgate-Motors_a29f408fa25dfea8509afe2a2e540f7f.jpg" alt="Highgate Motors exterior" loading="lazy">
+                </div>
+                <div class="gallery-item reveal-clip reveal-delay-4">
+                    <img src="https://static.where-e.com/United_Kingdom/England/Highgate-Motors_a422cc790fec95426026cdb7a9a823ea.jpg" alt="Highgate Motors equipment" loading="lazy">
+                </div>
+                <div class="gallery-item reveal-clip reveal-delay-1">
+                    <img src="https://static.where-e.com/United_Kingdom/England/Highgate-Motors_03c4c456e5e8a1995098b4747d1ee6f8.jpg" alt="Highgate Motors repair work" loading="lazy">
+                </div>
+                <div class="gallery-item reveal-clip reveal-delay-2">
+                    <img src="https://static.where-e.com/United_Kingdom/England/Highgate-Motors_0896f5f69487798bb5d05f65334a6b43.jpg" alt="Vehicle being serviced" loading="lazy">
+                </div>
+                <div class="gallery-item reveal-clip reveal-delay-3">
+                    <img src="https://static.where-e.com/United_Kingdom/England/Highgate-Motors_9f7c16d70f20ba1f3eafdf9daecd7bf8.jpg" alt="Highgate Motors team at work" loading="lazy">
+                </div>
+                <div class="gallery-item reveal-clip reveal-delay-4">
+                    <img src="https://static.where-e.com/United_Kingdom/England/Highgate-Motors_ab1217fa06d549ede4ee2c0f11e9c0de.jpg" alt="Highgate Motors garage interior" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact section" id="contact">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-label">Get In Touch</p>
+                <h2 class="section-title">Book your service.</h2>
+                <p class="section-subtitle">Fill in the form below or give us a call. We'll get back to you within the hour during business hours.</p>
+            </div>
+            <div class="contact-grid">
+                <form class="contact-form reveal-left reveal-delay-1" onsubmit="handleSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" placeholder="John Smith" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="07xxx xxx xxx" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Required</label>
+                        <select id="service" name="service" required>
+                            <option value="" disabled selected>Select a service</option>
+                            <option value="mot">MOT Testing</option>
+                            <option value="full-service">Full Service</option>
+                            <option value="interim-service">Interim Service</option>
+                            <option value="repairs">Repairs &amp; Diagnostics</option>
+                            <option value="bmw">BMW Specialist Service</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your vehicle and what you need..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:100%;">Send Enquiry</button>
+                </form>
+                <div class="contact-info reveal-right reveal-delay-2">
+                    <div class="contact-block">
+                        <h3>Call Us</h3>
+                        <a href="tel:02083401175" style="font-size:24px;font-weight:700;color:#c8a046;">020 8340 1175</a>
+                    </div>
+                    <div class="contact-block">
+                        <h3>Visit Us</h3>
+                        <p>9 Broadbent Close<br>Highgate, London<br>N6 5JW</p>
+                    </div>
+                    <div class="contact-block">
+                        <h3>Opening Hours</h3>
+                        <dl class="contact-hours">
+                            <dt>Monday — Friday</dt>
+                            <dd>8:00 — 18:00</dd>
+                            <dt>Saturday</dt>
+                            <dd>By arrangement</dd>
+                            <dt>Sunday</dt>
+                            <dd>Closed</dd>
+                        </dl>
+                    </div>
+                    <div class="map-wrapper">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2480.4!2d-0.146!3d51.572!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761a0d1e8e0001%3A0x1234567890abcdef!2s9%20Broadbent%20Cl%2C%20London%20N6%205JW!5e0!3m2!1sen!2suk!4v1700000000000!5m2!1sen!2suk"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Highgate Motors location">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" aria-label="Close">&times;</button>
+        <button class="lightbox-nav lightbox-prev" aria-label="Previous">&#8249;</button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="">
+        <button class="lightbox-nav lightbox-next" aria-label="Next">&#8250;</button>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <p class="footer-copy">&copy; 2025 Highgate Motors. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#services">Services</a>
+                    <a href="#reviews">Reviews</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/442083401175" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <!-- Mobile Call Bar -->
+    <div class="mobile-call-bar">
+        <a href="tel:02083401175">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call 020 8340 1175
+        </a>
+    </div>
+
+    <script>
+        // ========== LOADER ==========
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('done');
+            }, 1400);
+        });
+
+        // ========== HEADER SCROLL ==========
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
+
+        // ========== MOBILE NAV ==========
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileNav = document.getElementById('mobileNav');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            mobileNav.classList.toggle('open');
+            document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+        });
+
+        function closeMobileNav() {
+            menuToggle.classList.remove('active');
+            mobileNav.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // ========== SCROLL REVEAL ==========
+        const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-clip');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        reveals.forEach(el => observer.observe(el));
+
+        // ========== FORM HANDLER ==========
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.textContent = 'Sent — We\'ll be in touch!';
+            btn.style.background = '#2a7d2a';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                e.target.reset();
+            }, 3000);
+        }
+
+        // ========== LIGHTBOX ==========
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxCounter = document.getElementById('lightboxCounter');
+        const galleryImages = [...document.querySelectorAll('.gallery-item img')];
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            currentIndex = index;
+            lightboxImg.src = galleryImages[index].src;
+            lightboxCounter.textContent = (index + 1) + ' / ' + galleryImages.length;
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function navigateLightbox(dir) {
+            currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
+            lightboxImg.src = galleryImages[currentIndex].src;
+            lightboxCounter.textContent = (currentIndex + 1) + ' / ' + galleryImages.length;
+        }
+
+        galleryImages.forEach((img, i) => {
+            img.addEventListener('click', () => openLightbox(i));
+        });
+
+        lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+        lightbox.querySelector('.lightbox-prev').addEventListener('click', () => navigateLightbox(-1));
+        lightbox.querySelector('.lightbox-next').addEventListener('click', () => navigateLightbox(1));
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(-1);
+            if (e.key === 'ArrowRight') navigateLightbox(1);
+        });
+
+        // ========== ACTIVE NAV LINK ==========
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav a, .mobile-nav a:not(.mobile-nav-phone)');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const top = section.offsetTop - 100;
+                if (window.scrollY >= top) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.style.color = link.getAttribute('href') === '#' + current ? '#ffffff' : '';
+            });
+        }, { passive: true });
+    </script>
+</body>
+</html>
