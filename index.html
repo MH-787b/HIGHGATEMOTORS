@@ -777,6 +777,36 @@
                 border: none;
             }
 
+            /* Centre everything on mobile */
+            .hero-content { text-align: center; }
+            .hero-actions { justify-content: center; }
+            .hero-stats { justify-content: center; }
+
+            .section-label,
+            .section-title,
+            .section-subtitle {
+                text-align: center !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            .about-text { text-align: center; }
+            .about-details { justify-items: center; }
+            .about-detail { justify-content: center; }
+
+            .contact-info { text-align: center; }
+            .contact-hours { justify-content: center; }
+
+            /* Kill horizontal animations on mobile — they cause overflow */
+            .reveal-left,
+            .reveal-right {
+                transform: translateY(32px);
+            }
+            .reveal-left.visible,
+            .reveal-right.visible {
+                transform: none;
+            }
+
             .hero { min-height: 100svh; }
             .hero-title { font-size: 36px; }
             .hero-desc { font-size: 16px; }
